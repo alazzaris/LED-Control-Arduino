@@ -1,0 +1,43 @@
+int switch_state = 0;
+int last_yellow_status = 1;
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(2, INPUT);
+  pinMode(3, OUTPUT);
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  switch_state = digitalRead(2);
+
+  if (switch_state == LOW)
+  {
+    digitalWrite(3, HIGH);
+    digitalWrite(4, LOW);
+    digitalWrite(5, LOW);
+  }
+  else
+  {
+     digitalWrite(3, LOW);
+     digitalWrite(4, LOW);
+     if (last_yellow_status) {
+        digitalWrite(5, LOW);
+        last_yellow_status = 0;
+     } else {
+        digitalWrite(5, HIGH);
+        last_yellow_status = 1;
+     }
+    
+     delay(500); // 0.5
+     digitalWrite(4, HIGH);
+     delay(500); // 1.0
+     digitalWrite(4, LOW);
+     delay(500); // 1.5
+     digitalWrite(4, HIGH);
+     delay(500); // 2.0
+     digitalWrite(4, LOW);
+  }
+}
